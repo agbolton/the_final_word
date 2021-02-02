@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../components/bottom_bar.dart';
 
 class OurContent extends StatefulWidget {
   OurContent({Key key, this.title}) : super(key: key);
@@ -16,14 +17,7 @@ class _OurContentState extends State<OurContent> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text('Our Content', style: Theme.of(context).textTheme.headline4),
-          ],
-        ),
-      ),
+      bottomNavigationBar: BottomBar()
     );
   }
 }
