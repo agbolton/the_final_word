@@ -14,7 +14,7 @@ class App extends StatelessWidget {
         primarySwatch: Colors.teal,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: OurContent(title: 'Final Word'),
+      home: HomePage(title: 'Final Word'),
     );
   }
 }
