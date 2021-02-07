@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import '../../services/auth.dart';
 import '../../services/database.dart';
 import 'package:provider/provider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import '../../components/user_data.dart';
+import '../../components/profile_data.dart';
+import '../../models/profile.dart';
 
 class MyContent extends StatefulWidget {
 
@@ -14,9 +14,9 @@ class MyContent extends StatefulWidget {
 class _MyContentState extends State<MyContent> {
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<QuerySnapshot>.value(
-      value: DatabaseService().users,
-      child: UserData()
+    return StreamProvider<List<Profile>>.value(
+      value: DatabaseService().profiles,
+      child: ProfileData()
     );
   }
 }
