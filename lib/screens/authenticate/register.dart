@@ -19,6 +19,8 @@ class _RegisterState extends State<Register> {
   bool loading = false;
 
   // text field state
+  String first_name = '';
+  String last_name = '';
   String email = '';
   String password = '';
   String error = '';
@@ -45,8 +47,24 @@ class _RegisterState extends State<Register> {
           padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
           child: Form(
             key: _formKey,
-            child: Column(
+            child: ListView(
               children: [
+                SizedBox(height: 20.0),
+                TextFormField(
+                  decoration: textInputDecoration.copyWith(hintText: 'First Name'),
+                  validator: (val) => val.isEmpty ? 'Enter a first name' : null,
+                  onChanged: (val) {
+                    setState(() => first_name = val);
+                  }
+                ),
+                SizedBox(height: 20.0),
+                TextFormField(
+                  decoration: textInputDecoration.copyWith(hintText: 'Last Name'),
+                  validator: (val) => val.isEmpty ? 'Enter a last name' : null,
+                  onChanged: (val) {
+                    setState(() => last_name = val);
+                  }
+                ),
                 SizedBox(height: 20.0),
                 TextFormField(
                   decoration: textInputDecoration.copyWith(hintText: 'Email'),
@@ -73,7 +91,7 @@ class _RegisterState extends State<Register> {
                   onPressed: () async {
                     if (_formKey.currentState.validate()) {
                       setState(() => loading = true);
-                      dynamic result = await _auth.registerWithEmailAndPassword(email, password);
+                      dynamic result = await _auth.registerWithEmailAndPassword(email, password, first_name, last_name);
                       if (result == null) {
                         setState(() {
                           error = 'Please supply a valid email';

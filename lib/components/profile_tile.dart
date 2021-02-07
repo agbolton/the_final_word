@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../models/profile.dart';
+import '../models/user.dart';
 
 class ProfileTile extends StatelessWidget {
 
@@ -18,7 +18,7 @@ class ProfileTile extends StatelessWidget {
             radius: 25.0,
             backgroundColor: Colors.blue,
           ),
-          title: Text(profile.name),
+          title: Text('${profile.first_name} ${profile.last_name}'),
           subtitle: Text(profile.email)
         )
       ),
