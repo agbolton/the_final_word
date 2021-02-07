@@ -19,7 +19,7 @@ class App extends StatelessWidget {
       child: MaterialApp(
         title: 'Final Word',
         theme: ThemeData(
-          primarySwatch: Colors.teal,
+          primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         home: Wrapper()

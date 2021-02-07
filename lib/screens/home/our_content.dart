@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../components/placeholder_widget.dart';
 import '../../services/auth.dart';
+import 'my_content.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -17,7 +18,7 @@ class _HomePageState extends State<HomePage> {
                     OurContent(),
                     PlaceholderWidget(Colors.deepOrange),
                     PlaceholderWidget(Colors.green),
-                    PlaceholderWidget(Colors.red)];
+                    MyContent()];
 
   void onTabTapped(int index) {
     setState(() {
