@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import '../components/placeholder_widget.dart';
+import '../../components/placeholder_widget.dart';
+import '../../services/auth.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key key, this.title}) : super(key: key);
+  HomePage({Key key}) : super(key: key);
 
-  final String title;
+  final String title = 'The Final Word';
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -23,11 +24,23 @@ class _HomePageState extends State<HomePage> {
       _currentIndex = index;
     });
   }
+
+  final AuthService _auth = AuthService();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        actions: <Widget>[
+          TextButton.icon(
+            icon: Icon(Icons.person, color: Colors.black),
+            onPressed: () async {
+              await _auth.signOut();
+            },
+            label: Text('Logout', style: TextStyle(color: Colors.black)),
+          )
+        ],
       ),
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(

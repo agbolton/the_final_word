@@ -1,20 +1,29 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'screens/our_content.dart';
+import 'package:provider/provider.dart';
+import 'models/user.dart';
+import 'screens/wrapper.dart';
+import 'services/auth.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(App());
 }
 
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Final Word',
-      theme: ThemeData(
-        primarySwatch: Colors.teal,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+    return StreamProvider<NewUser>.value(
+      value: AuthService().user,
+      child: MaterialApp(
+        title: 'Final Word',
+        theme: ThemeData(
+          primarySwatch: Colors.teal,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
+        home: Wrapper()
       ),
-      home: HomePage(title: 'Final Word'),
     );
   }
 }
