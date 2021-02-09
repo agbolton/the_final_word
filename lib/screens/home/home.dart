@@ -3,6 +3,7 @@ import '../../components/placeholder_widget.dart';
 import '../../services/auth.dart';
 import 'my_content.dart';
 import 'our_content.dart';
+import 'boy_names.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -15,11 +16,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
-  final List<Widget> _children = [ 
-                    OurContent(),
-                    PlaceholderWidget(Colors.deepOrange),
-                    PlaceholderWidget(Colors.green),
-                    MyContent()];
+  final List<Widget> _children = [
+    OurContent(),
+    MyBoy(),
+    PlaceholderWidget(Colors.green),
+    MyContent()
+  ];
 
   void onTabTapped(int index) {
     setState(() {
@@ -32,43 +34,40 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-        actions: <Widget>[
-          TextButton.icon(
-            icon: Icon(Icons.person, color: Colors.black),
-            onPressed: () async {
-              await _auth.signOut();
-            },
-            label: Text('Logout', style: TextStyle(color: Colors.black)),
-          )
-        ],
-      ),
-      body: _children[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: onTabTapped,
-        currentIndex: _currentIndex, // this will be set when a new tab is tapped
-        selectedItemColor: Colors.amber[800],
-        type: BottomNavigationBarType.fixed,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.people),
-            label: 'Our Content',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person, color: Colors.blue),
-            label: 'Boy Names',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person, color: Colors.pink),
-            label: 'Girl Names',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'My Content'
-          )
-        ],
-     )
-    );
+        appBar: AppBar(
+          title: Text(widget.title),
+          actions: <Widget>[
+            TextButton.icon(
+              icon: Icon(Icons.person, color: Colors.black),
+              onPressed: () async {
+                await _auth.signOut();
+              },
+              label: Text('Logout', style: TextStyle(color: Colors.black)),
+            )
+          ],
+        ),
+        body: _children[_currentIndex],
+        bottomNavigationBar: BottomNavigationBar(
+          onTap: onTabTapped,
+          currentIndex:
+              _currentIndex, // this will be set when a new tab is tapped
+          selectedItemColor: Colors.amber[800],
+          type: BottomNavigationBarType.fixed,
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.people),
+              label: 'Our Content',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person, color: Colors.blue),
+              label: 'Boy Names',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person, color: Colors.pink),
+              label: 'Girl Names',
+            ),
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'My Content')
+          ],
+        ));
   }
 }
