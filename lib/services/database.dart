@@ -30,25 +30,25 @@ class DatabaseService {
   Stream<Profile> get profile {
     return profilesCollection.doc(uid).snapshots().map(_profileFromSnapshot);
   }
-
-  // example to map a set of profiles to a list
-  // List<Profile> _profileListFromSnapshot(QuerySnapshot snapshot) {
-  //   return snapshot.docs.map((doc) {
-  //     return Profile(
-  //       name: doc.data()['name'] ?? '',
-  //       email: doc.data()['email'] ?? ''
-  //     );
-  //   }).toList();
-  // }
-
-  // exanmple to return a list of those profiles
-  // Stream<List<Profile>> get profiles {
-  //   return profilesCollection.snapshots()
-  //   .map(_profileListFromSnapshot);
-  // }
-
 }
 
+// example to map a set of profiles to a list
+// List<Profile> _profileListFromSnapshot(QuerySnapshot snapshot) {
+//   return snapshot.docs.map((doc) {
+//     return Profile(
+//       name: doc.data()['name'] ?? '',
+//       email: doc.data()['email'] ?? ''
+//     );
+//   }).toList();
+// }
+
+// exanmple to return a list of those profiles
+// Stream<List<Profile>> get profiles {
+//   return profilesCollection.snapshots()
+//   .map(_profileListFromSnapshot);
+// }
+
+/*
 class BabyNameService {
   final String gender;
   BabyNameService({this.gender});
@@ -57,11 +57,16 @@ class BabyNameService {
       FirebaseFirestore.instance.collection('baby names');
 
   BabyName _nameFromSnapShot(DocumentSnapshot snapshot) {
-    return BabyName(
-        gender: snapshot.data()['gender'], name: snapshot.data()['name']);
+    print(snapshot.data().keys);
+    snapshot.data().keys.forEach((element) {
+      print(element);
+      var name = BabyName(gender: 'male', name: element);
+    });
+    return name;
   }
 
   Stream<BabyName> get name {
     return babyCollection.doc('male').snapshots().map(_nameFromSnapShot);
   }
 }
+*/
