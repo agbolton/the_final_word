@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../components/placeholder_widget.dart';
 import '../../services/auth.dart';
 import 'my_content.dart';
 import 'our_content.dart';
