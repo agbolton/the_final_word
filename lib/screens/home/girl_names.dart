@@ -3,35 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:the_final_word/components/loading.dart';
 import '../../services/database.dart';
 import 'package:provider/provider.dart';
-import '../../models/babynames.dart';
+import '../../models/babyName.dart';
 import '../../services/database.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class MyGirl extends StatelessWidget {
+class MyGirl extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Baby Names',
-      home: MyHomePage(),
-    );
-  }
+  _MyGirlState createState() => _MyGirlState();
 }
 
-class MyHomePage extends StatefulWidget {
-  @override
-  _MyHomePageState createState() {
-    return _MyHomePageState();
-  }
-}
-
-class _MyHomePageState extends State<MyHomePage> {
+class _MyGirlState extends State<MyGirl> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: _buildBody(context),
-    );
+    return _buildBody(context);
   }
 }
 
@@ -75,28 +61,8 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
         borderRadius: BorderRadius.circular(5.0),
       ),
       child: GestureDetector(
-        child: Text(name),
-        onTap: () {
-          setState(() {});
-        },
+        child: Text(name)
       ),
     ),
   );
 }
-
-/*
-class Baby {
-  final String name;
-  final DocumentReference reference;
-
-  Baby.fromMap(Map<String, dynamic> map, {this.reference})
-      : assert(map['name'] != null),
-        name = map['name'];
-
-  Baby.fromSnapshot(DocumentSnapshot snapshot)
-      : this.fromMap(snapshot.data(), reference: snapshot.reference);
-
-  @override
-  String toString() => "Baby<$name>";
-}
-*/

@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/widgets.dart';
 import '../models/user.dart';
-import '../models/babynames.dart';
+import '../models/babyName.dart';
 
 class DatabaseService {
   final String uid;
@@ -47,26 +47,3 @@ class DatabaseService {
 //   return profilesCollection.snapshots()
 //   .map(_profileListFromSnapshot);
 // }
-
-/*
-class BabyNameService {
-  final String gender;
-  BabyNameService({this.gender});
-
-  final CollectionReference babyCollection =
-      FirebaseFirestore.instance.collection('baby names');
-
-  BabyName _nameFromSnapShot(DocumentSnapshot snapshot) {
-    print(snapshot.data().keys);
-    snapshot.data().keys.forEach((element) {
-      print(element);
-      var name = BabyName(gender: 'male', name: element);
-    });
-    return name;
-  }
-
-  Stream<BabyName> get name {
-    return babyCollection.doc('male').snapshots().map(_nameFromSnapShot);
-  }
-}
-*/
