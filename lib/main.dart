@@ -17,6 +17,7 @@ class App extends StatelessWidget {
     return StreamProvider<NewUser>.value(
       value: AuthService().user,
       child: MaterialApp(
+          debugShowCheckedModeBanner: false,
           title: 'Final Word',
           theme: ThemeData(
             primarySwatch: Colors.blue,

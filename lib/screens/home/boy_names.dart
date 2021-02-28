@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../services/get_name.dart';
 
 class MyBoy extends StatefulWidget {
   @override

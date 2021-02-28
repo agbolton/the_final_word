@@ -1,7 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/widgets.dart';
 import '../models/user.dart';
-import '../models/baby_name.dart';
 
 class DatabaseService {
   final String uid;
