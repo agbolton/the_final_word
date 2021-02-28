@@ -1,70 +1,73 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:the_final_word/components/loading.dart';
-import '../../services/database.dart';
-import 'package:provider/provider.dart';
-import '../../models/babynames.dart';
-import '../../services/database.dart';
+import '../../services/get_name.dart';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
+class MyGirl extends StatefulWidget {
+  @override
+  _MyGirlState createState() => _MyGirlState();
+}
 
-class MyGirl extends StatelessWidget {
+class _MyGirlState extends State<MyGirl> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Baby Names',
-      home: MyHomePage(),
-    );
+    //return _buildBody(context);
+    // return Center(
+    //   child: returnGirlName(context)
+    // );
+    return Center(
+      child: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.only(top: 220.0),
+            child: returnGirlName(context)
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 175.0),
+            child: 
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.stop_circle_outlined),
+                    color: Colors.red,
+                    iconSize: 80,
+                    onPressed: () {},
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.help),
+                    onPressed: () {},
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.check_box),
+                    color: Colors.green,
+                    iconSize: 80,
+                    onPressed: () {},
+                  )
+                  ])
+            )
+        ])
+      );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  @override
-  _MyHomePageState createState() {
-    return _MyHomePageState();
-  }
-}
 
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: _buildBody(context),
-    );
-  }
-}
 
-Widget _buildBody(BuildContext context) {
-  return StreamBuilder<QuerySnapshot>(
-    stream: FirebaseFirestore.instance
-        .collection('baby names')
-        .where('gender', isEqualTo: 'female')
-        .limit(2)
-        .snapshots(),
-    builder: (context, snapshot) {
-      if (!snapshot.hasData) return LinearProgressIndicator();
-      return _buildList(context, snapshot.data.docs);
-    },
-  );
-}
 
-Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
-  return ListView(
-    padding: const EdgeInsets.all(50),
-    children: snapshot.map((data) => _buildListItem(context, data)).toList(),
-  );
-}
 
-Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
-  var gender = data.data()['gender'].toString();
+// Widget _buildBody(BuildContext context) {
+//   return StreamBuilder<QuerySnapshot>(
+//     stream: FirebaseFirestore.instance
+//         .collection('baby names')
+//         .where('gender', isEqualTo: 'female')
+//         .limit(1)
+//         .snapshots(),
+//     builder: (context, snapshot) {
+//       if (!snapshot.hasData) return LinearProgressIndicator();
+//       return _buildList(context, snapshot.data.docs);
+//     },
+//   );
+// }
 
-  if (gender != "female") {
-    print("here");
-  }
-
-  var name = data.data()['name'].toString();
-
+<<<<<<< HEAD
   return Padding(
     key: ValueKey(data.data()['name']),
     padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 200.0),
@@ -81,20 +84,40 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
     ),
   );
 }
+=======
+>>>>>>> 050187cd8ab54b70bce0e640f06e8e5b01efc118
 
-/*
-class Baby {
-  final String name;
-  final DocumentReference reference;
 
-  Baby.fromMap(Map<String, dynamic> map, {this.reference})
-      : assert(map['name'] != null),
-        name = map['name'];
+// Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
+//   return ListView(
+//     padding: const EdgeInsets.all(50),
+//     children: snapshot.map((data) => _buildListItem(context, data)).toList(),
+//   );
+// }
 
-  Baby.fromSnapshot(DocumentSnapshot snapshot)
-      : this.fromMap(snapshot.data(), reference: snapshot.reference);
+// Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
+//   var gender = data.data()['gender'].toString();
 
-  @override
-  String toString() => "Baby<$name>";
-}
-*/
+//   if (gender != "female") {
+//     print("here");
+//   }
+
+//   var name = data.data()['name'].toString();
+//   print(name);
+//   print(gender);
+
+//   return Padding(
+//     key: ValueKey(data.data()['name']),
+//     padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 200.0),
+//     child: Container(
+//       height: 500,
+//       decoration: BoxDecoration(
+//         border: Border.all(color: Colors.grey),
+//         borderRadius: BorderRadius.circular(5.0),
+//       ),
+//       child: GestureDetector(
+//         child: Text(name)
+//       ),
+//     ),
+//   );
+// }
