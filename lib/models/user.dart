@@ -2,6 +2,10 @@ class NewUser {
   final String uid;
 
   NewUser({this.uid});
+
+  String get id {
+    return uid;
+  }
 }
 
 class Profile {

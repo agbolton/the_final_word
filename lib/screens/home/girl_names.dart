@@ -76,9 +76,7 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
       ),
       child: GestureDetector(
         child: Text(name),
-        onTap: () {
-          setState(() {});
-        },
+        onTap: () {},
       ),
     ),
   );
