@@ -4,7 +4,6 @@ import 'my_content.dart';
 import 'our_content.dart';
 import 'boy_names.dart';
 import 'girl_names.dart';
-import 'generate_code.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
