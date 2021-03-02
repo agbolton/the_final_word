@@ -16,13 +16,13 @@ Widget returnGirlName(BuildContext context) {
 
   final String documentId = 'YCZKdhhR5X4UMTly1jXh';
 
-  FirebaseFirestore.instance.collection('baby names')
-    .where('gender', isEqualTo: 'female').get()
-    .then((QuerySnapshot querySnapshot) => {
-        querySnapshot.docs.forEach((doc) {
-          print(doc.id);
-        })
-    });
+  // FirebaseFirestore.instance.collection('baby names')
+  //   .where('gender', isEqualTo: 'female').get()
+  //   .then((QuerySnapshot querySnapshot) => {
+  //       querySnapshot.docs.forEach((doc) {
+  //         print(doc.id);
+  //       })
+  //   });
 
     //List<BabyName> babyNames = await getBabyNames();
   

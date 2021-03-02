@@ -4,10 +4,13 @@ import 'package:provider/provider.dart';
 import 'models/user.dart';
 import 'screens/wrapper.dart';
 import 'services/auth.dart';
+import 'services/sql_db.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await DatabaseInstance.initialize();
   runApp(App());
 }
 
