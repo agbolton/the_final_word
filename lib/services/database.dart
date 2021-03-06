@@ -11,8 +11,12 @@ class DatabaseService {
 
   Future updateProfileData(
       String first_name, String last_name, String email) async {
-    return await profilesCollection.doc(uid).set(
-        {'first_name': first_name, 'last_name': last_name, 'email': email});
+    return await profilesCollection.doc(uid).set({
+      'first_name': first_name,
+      'last_name': last_name,
+      'email': email,
+      'access_code': ''
+    });
   }
 
   // profileData from snapshot (build one profile object)
@@ -21,7 +25,8 @@ class DatabaseService {
         uid: uid,
         first_name: snapshot.data()['first_name'],
         last_name: snapshot.data()['last_name'],
-        email: snapshot.data()['email']);
+        email: snapshot.data()['email'],
+        access_code: snapshot.data()['access_code']);
   }
 
   // get user doc stream (AKA get one user profile)

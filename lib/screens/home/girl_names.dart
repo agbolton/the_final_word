@@ -9,36 +9,35 @@ class GirlNames extends StatefulWidget {
 }
 
 class _GirlNamesState extends State<GirlNames> {
-
   int girlId;
 
   BabyName newName = BabyName();
 
   void initState() {
     super.initState();
-    //addSomeNames();
+    addSomeNames();
     initId();
   }
 
-  // void addSomeNames() async {
-  //   final database = DatabaseInstance.getInstance();
-  //   BabyName name1 = BabyName(girlId: '1', name: 'Rachael', gender: 'female');
-  //   BabyName name2 = BabyName(girlId: '2', name: 'Ann', gender: 'female');
-  //   BabyName name3 = BabyName(girlId: '3', name: 'Gina', gender: 'female');
-  //   BabyName name4 = BabyName(girlId: '4', name: 'Ashley', gender: 'female');
-  //   BabyName name5 = BabyName(girlId: '5', name: 'Jill', gender: 'female');
-  //   BabyName name6 = BabyName(girlId: '6', name: 'Emily', gender: 'female');
-  //   database.saveGirlName(name: name1);
-  //   database.saveGirlName(name: name2);
-  //   database.saveGirlName(name: name3);
-  //   database.saveGirlName(name: name4);
-  //   database.saveGirlName(name: name5);
-  //   database.saveGirlName(name: name6);
-  // }
+  void addSomeNames() async {
+    final database = DatabaseInstance.getInstance();
+    BabyName name1 = BabyName(id: '1', name: 'Rachael', gender: 'female');
+    BabyName name2 = BabyName(id: '2', name: 'Ann', gender: 'female');
+    BabyName name3 = BabyName(id: '3', name: 'Gina', gender: 'female');
+    BabyName name4 = BabyName(id: '4', name: 'Ashley', gender: 'female');
+    BabyName name5 = BabyName(id: '5', name: 'Jill', gender: 'female');
+    BabyName name6 = BabyName(id: '6', name: 'Emily', gender: 'female');
+    database.saveGirlName(name: name1);
+    database.saveGirlName(name: name2);
+    database.saveGirlName(name: name3);
+    database.saveGirlName(name: name4);
+    database.saveGirlName(name: name5);
+    database.saveGirlName(name: name6);
+  }
 
   void initId() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState( () {
+    setState(() {
       girlId = prefs.getInt('girlId') ?? 1;
     });
     getName(girlId);
@@ -54,14 +53,13 @@ class _GirlNamesState extends State<GirlNames> {
   void getName(int girlId) async {
     final database = DatabaseInstance.getInstance();
     BabyName pullName = await database.getNewGirlName(girlId);
-    setState( () {
+    setState(() {
       newName = pullName;
-    });    
+    });
   }
-  
+
   @override
   Widget build(BuildContext context) {
-
     if (newName == null) {
       return Center(child: CircularProgressIndicator());
     }
@@ -69,30 +67,27 @@ class _GirlNamesState extends State<GirlNames> {
     return Center(
         child: Column(children: [
       Padding(
-          padding: EdgeInsets.only(top: 220.0), 
+          padding: EdgeInsets.only(top: 220.0),
           child: Text('${newName.name}',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 60, color: Colors.pink[600])
-          )),
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 60,
+                  color: Colors.pink[600]))),
       Padding(
           padding: EdgeInsets.only(top: 100.0),
           child:
               Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
             IconButton(
-              icon: Icon(Icons.stop_circle_outlined),
-              color: Colors.red,
-              iconSize: 80,
-              onPressed: updateId
-            ),
+                icon: Icon(Icons.stop_circle_outlined),
+                color: Colors.red,
+                iconSize: 80,
+                onPressed: updateId),
+            IconButton(icon: Icon(Icons.help), onPressed: () {}),
             IconButton(
-              icon: Icon(Icons.help),
-              onPressed: () {}
-            ),
-            IconButton(
-              icon: Icon(Icons.check_box),
-              color: Colors.green,
-              iconSize: 80,
-              onPressed: updateId
-            )
+                icon: Icon(Icons.check_box),
+                color: Colors.green,
+                iconSize: 80,
+                onPressed: updateId)
           ]))
     ]));
   }

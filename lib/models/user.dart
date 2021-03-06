@@ -13,6 +13,12 @@ class Profile {
   final String first_name;
   final String last_name;
   final String email;
+  final String access_code;
 
-  Profile({this.uid, this.first_name, this.last_name, this.email});
+  Profile(
+      {this.uid,
+      this.first_name,
+      this.last_name,
+      this.email,
+      this.access_code});
 }

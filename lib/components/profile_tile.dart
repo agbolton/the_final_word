@@ -13,6 +13,9 @@ class ProfileTile extends StatelessWidget {
     final CollectionReference userCodes =
         FirebaseFirestore.instance.collection('user_codes');
 
+    final CollectionReference userProfile =
+        FirebaseFirestore.instance.collection('profiles');
+
     var random = new Random();
     var randomCodeNum = random.nextInt(900000) + 100000;
     var randomCode = randomCodeNum.toString();
@@ -22,6 +25,14 @@ class ProfileTile extends StatelessWidget {
           .doc(randomCode)
           .set({'user_id': profile.uid})
           .then((value) => print('Code Generate'))
+          .catchError((onError) => print('Failed to add'));
+    }
+
+    Future<void> addCodetoProfile() {
+      return userProfile
+          .doc(profile.uid)
+          .update({'access_code': randomCode})
+          .then((value) => print('Code Added to profile'))
           .catchError((onError) => print('Failed to add'));
     }
 
@@ -35,9 +46,12 @@ class ProfileTile extends StatelessWidget {
               backgroundColor: Colors.blue,
             ),
             title: Text('${profile.first_name} ${profile.last_name}'),
-            subtitle: Text(profile.email),
+            subtitle: Text('Code to Share: ${profile.access_code}'),
             trailing: FloatingActionButton(
-              onPressed: generateCodetoDB,
+              onPressed: () async {
+                await generateCodetoDB();
+                await addCodetoProfile();
+              },
               child: Icon(Icons.add),
             )
             /*Icon(
