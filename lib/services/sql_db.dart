@@ -3,10 +3,13 @@ import '../models/baby_name.dart';
 
 class DatabaseInstance {
 
-  static const String DATABASE_FILENAME = 'the_final_word.sqlite3.db';
-  static const String SQL_INSERT = 'INSERT INTO baby_names(name, gender) VALUES(?, ?)';
-  static const String SQL_CREATE_SCHEMA = 'CREATE TABLE IF NOT EXISTS baby_names(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, gender TEXT NOT NULL);';
-  static const String SQL_SELECT = 'SELECT * FROM baby_names';
+  static const String DATABASE_FILENAME = 'final_word_sqldb.sqlite3.db';
+  static const String SQL_INSERT_BOY = 'INSERT INTO boy_names(name) VALUES(?)';
+  static const String SQL_INSERT_GIRL = 'INSERT INTO girl_names(name) VALUES(?)';
+  static const String SQL_CREATE_BOYS_SCHEMA = 'CREATE TABLE IF NOT EXISTS boy_names(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL);';
+  static const String SQL_CREATE_GIRLS_SCHEMA = 'CREATE TABLE IF NOT EXISTS girl_names(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL);';
+  static const String SQL_SELECT_BOYS = 'SELECT * FROM boy_names';
+  static const String SQL_SELECT_GIRLS = 'SELECT * FROM girl_names';
 
   static DatabaseInstance _instance;
 
@@ -24,10 +27,10 @@ class DatabaseInstance {
     final db = await openDatabase(DATABASE_FILENAME,
       version: 1,
       onCreate: (Database db, int version) async {
-        createTables(db, SQL_CREATE_SCHEMA);
+        createTables(db, SQL_CREATE_BOYS_SCHEMA);
+        createTables(db, SQL_CREATE_GIRLS_SCHEMA);
       }
     );
-
     _instance = DatabaseInstance._(database: db);
   }
 
@@ -35,35 +38,53 @@ class DatabaseInstance {
     await db.execute(sql);
   }
 
-  void saveBabyName({BabyName name}) async {
+  void saveGirlName({BabyName name}) async {
     await db.transaction( (txn) async {
-      await txn.rawInsert(SQL_INSERT, [name.name, name.gender]);
+      await txn.rawInsert(SQL_INSERT_GIRL, [name.name]);
     });
   }
 
-  Future<List<BabyName>> allBabyNames() async {
-    final allBabyNames = await db.rawQuery(SQL_SELECT);
-
-    final babyNameEntries = allBabyNames.map( (record) {
-      return BabyName(
-        id: record['id'].toString(),
-        name: record['name'],
-        gender: record['gender']
-      );
-    }).toList();
-    
-    return babyNameEntries;
+  void saveBoyName({BabyName name}) async {
+    await db.transaction( (txn) async {
+      await txn.rawInsert(SQL_INSERT_BOY, [name.name]);
+    });
   }
 
-  Future<BabyName> getNewName(int id) async {
-    String SQL_BABY_SELECT = 'SELECT * FROM baby_names WHERE id=$id';
+  // Future<List<BabyName>> allBabyNames() async {
+  //   final allBabyNames = await db.rawQuery(SQL_SELECT);
+
+  //   final babyNameEntries = allBabyNames.map( (record) {
+  //     return BabyName(
+  //       id: record['id'].toString(),
+  //       name: record['name'],
+  //       gender: record['gender']
+  //     );
+  //   }).toList();
+    
+  //   return babyNameEntries;
+  // }
+
+  Future<BabyName> getNewGirlName(int id) async {
+    String SQL_BABY_SELECT = 'SELECT * FROM girl_names WHERE id=$id';
 
     final babyName = await db.rawQuery(SQL_BABY_SELECT);
 
     return BabyName(
       id: babyName[0]['id'].toString(),
       name: babyName[0]['name'],
-      gender: babyName[0]['gender']
+      gender: 'female'
+    );
+  }
+
+  Future<BabyName> getNewBoyName(int id) async {
+    String SQL_BABY_SELECT = 'SELECT * FROM boy_names WHERE id=$id';
+
+    final babyName = await db.rawQuery(SQL_BABY_SELECT);
+
+    return BabyName(
+      id: babyName[0]['id'].toString(),
+      name: babyName[0]['name'],
+      gender: 'male'
     );
   }
 
