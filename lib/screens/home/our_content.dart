@@ -4,6 +4,7 @@ import '../../services/database.dart';
 import 'package:provider/provider.dart';
 import '../../models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class OurContent extends StatefulWidget {
   const OurContent({Key key}) : super(key: key);
@@ -13,12 +14,25 @@ class OurContent extends StatefulWidget {
 
 class _OurContentState extends State<OurContent> {
   final formKey = GlobalKey<FormState>();
-  var isConnected = false;
+  bool _view;
   final CollectionReference userProfile =
       FirebaseFirestore.instance.collection('profiles');
   String code;
   Profile profile = Profile();
   Profile friendProfile = Profile();
+
+  void initState() {
+    super.initState();
+    initView();
+  }
+
+  void initView() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _view = prefs.getBool('view') ?? true;
+    });
+    print(_view);
+  }
 
   void addConnectionID(Profile profile, String uid) async {
     return userProfile
@@ -43,23 +57,35 @@ class _OurContentState extends State<OurContent> {
   Widget build(BuildContext context) {
     final user = Provider.of<NewUser>(context);
     return StreamBuilder<Profile>(
+      //load actual profile off user
       stream: DatabaseService(uid: user.uid).profile,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           Profile profile = snapshot.data;
+          // check if a connection exists
           if (profile.connected_to != "") {
+            // load connection profile
             return StreamBuilder<Profile>(
                 stream: DatabaseService(uid: profile.connected_to).profile,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     Profile friendProfile = snapshot.data;
+                    // Create a new list of shared names
                     List<String> nameSets = [];
-                    profile.girls_names.forEach((element) {
-                      if (friendProfile.girls_names.contains(element)) {
-                        nameSets.add(element);
-                      }
-                    });
-                    print(nameSets);
+                    if (_view) {
+                      profile.girls_names.forEach((element) {
+                        if (friendProfile.girls_names.contains(element)) {
+                          nameSets.add(element);
+                        }
+                      });
+                    } else {
+                      profile.boys_names.forEach((element) {
+                        if (friendProfile.boys_names.contains(element)) {
+                          nameSets.add(element);
+                        }
+                      });
+                    }
+                    // Do the reserve of an connected to add
                     if (friendProfile.connected_to != profile.uid) {
                       addConnectionID(friendProfile, profile.uid);
                     }

@@ -77,7 +77,7 @@ class _HomePageState extends State<HomePage> {
                 decoration: BoxDecoration(color: Colors.blue),
               ),
               SwitchListTile(
-                  title: Text('View Girls / Boys Names'),
+                  title: Text('View Boys / Girl Names'),
                   value: _view,
                   onChanged: (bool value) {
                     onChange(value);
