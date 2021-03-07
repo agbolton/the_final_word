@@ -16,6 +16,7 @@ class Profile {
   final String access_code;
   final List<String> girls_names;
   final List<String> boys_names;
+  final String connected_to;
 
   Profile(
       {this.uid,
@@ -24,7 +25,8 @@ class Profile {
       this.email,
       this.access_code,
       this.girls_names,
-      this.boys_names});
+      this.boys_names,
+      this.connected_to});
 
   String get lastname {
     return this.last_name;
