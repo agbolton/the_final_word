@@ -14,11 +14,17 @@ class Profile {
   final String last_name;
   final String email;
   final String access_code;
+  final List<String> girls_names;
 
   Profile(
       {this.uid,
       this.first_name,
       this.last_name,
       this.email,
-      this.access_code});
+      this.access_code,
+      this.girls_names});
+
+  String get lastname {
+    return this.last_name;
+  }
 }

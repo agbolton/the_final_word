@@ -26,7 +26,9 @@ class DatabaseService {
         first_name: snapshot.data()['first_name'],
         last_name: snapshot.data()['last_name'],
         email: snapshot.data()['email'],
-        access_code: snapshot.data()['access_code']);
+        access_code: snapshot.data()['access_code'],
+        girls_names:
+            List.castFrom(snapshot.data()['girls_names'] as List ?? []));
   }
 
   // get user doc stream (AKA get one user profile)
