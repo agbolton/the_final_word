@@ -53,12 +53,35 @@ class _OurContentState extends State<OurContent> {
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     Profile friendProfile = snapshot.data;
+                    List<String> nameSets = [];
+                    profile.girls_names.forEach((element) {
+                      if (friendProfile.girls_names.contains(element)) {
+                        nameSets.add(element);
+                      }
+                    });
+                    print(nameSets);
                     if (friendProfile.connected_to != profile.uid) {
                       addConnectionID(friendProfile, profile.uid);
                     }
-                    return Container(
-                        child:
-                            Text('Friends Name: ${friendProfile.last_name}'));
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                            'You are connected with ${friendProfile.first_name} ${friendProfile.last_name}'),
+                        Expanded(
+                          child: ListView.builder(
+                            itemCount: nameSets.length,
+                            itemBuilder: (context, index) {
+                              return ListTile(
+                                title: Text('${nameSets[index]}'),
+                              );
+                            },
+                          ),
+                        )
+                      ],
+                    );
+                  } else {
+                    return Loading();
                   }
                 });
           } else {
