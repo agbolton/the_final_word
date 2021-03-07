@@ -16,8 +16,6 @@ class GirlNames extends StatefulWidget {
 class _GirlNamesState extends State<GirlNames> {
   int girlId;
 
-  List<String> names = [];
-
   BabyName newName = BabyName();
 
   void initState() {
@@ -66,7 +64,6 @@ class _GirlNamesState extends State<GirlNames> {
   }
 
   void addNametoDatabase(String uid, List<String> names) async {
-    print('In Add Names ${names}');
     final CollectionReference userProfile =
         FirebaseFirestore.instance.collection('profiles');
 
@@ -119,7 +116,6 @@ class _GirlNamesState extends State<GirlNames> {
                               addNametoDatabase(
                                   profile.uid, profile.girls_names);
                             });
-                            print(profile.girls_names);
                             updateId();
                           })
                     ],

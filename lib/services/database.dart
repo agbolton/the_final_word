@@ -15,7 +15,9 @@ class DatabaseService {
       'first_name': first_name,
       'last_name': last_name,
       'email': email,
-      'access_code': ''
+      'access_code': '',
+      'girls_names': [],
+      'boys_names': []
     });
   }
 
@@ -28,7 +30,8 @@ class DatabaseService {
         email: snapshot.data()['email'],
         access_code: snapshot.data()['access_code'],
         girls_names:
-            List.castFrom(snapshot.data()['girls_names'] as List ?? []));
+            List.castFrom(snapshot.data()['girls_names'] as List ?? []),
+        boys_names: List.castFrom(snapshot.data()['boys_names'] as List ?? []));
   }
 
   // get user doc stream (AKA get one user profile)
@@ -36,19 +39,3 @@ class DatabaseService {
     return profilesCollection.doc(uid).snapshots().map(_profileFromSnapshot);
   }
 }
-
-// example to map a set of profiles to a list
-// List<Profile> _profileListFromSnapshot(QuerySnapshot snapshot) {
-//   return snapshot.docs.map((doc) {
-//     return Profile(
-//       name: doc.data()['name'] ?? '',
-//       email: doc.data()['email'] ?? ''
-//     );
-//   }).toList();
-// }
-
-// exanmple to return a list of those profiles
-// Stream<List<Profile>> get profiles {
-//   return profilesCollection.snapshots()
-//   .map(_profileListFromSnapshot);
-// }

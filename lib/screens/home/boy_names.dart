@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import '../../services/sql_db.dart';
 import '../../models/baby_name.dart';
+import '../../services/database.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider/provider.dart';
+import '../../models/user.dart';
+import 'package:the_final_word/components/loading.dart';
 
 class BoyNames extends StatefulWidget {
   @override
@@ -58,37 +63,66 @@ class _BoyNamesState extends State<BoyNames> {
     });
   }
 
+  void addNametoDatabase(String uid, List<String> names) async {
+    final CollectionReference userProfile =
+        FirebaseFirestore.instance.collection('profiles');
+
+    return userProfile
+        .doc(uid)
+        .update({'boys_names': FieldValue.arrayUnion(names)}).catchError(
+            (onError) => print('Failed to add'));
+  }
+
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<NewUser>(context);
     if (newName.name == null) {
       return Center(child: CircularProgressIndicator());
     }
 
-    return Center(
-        child: Column(children: [
-      Padding(
-          padding: EdgeInsets.only(top: 220.0),
-          child: Text('${newName.name}',
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 60,
-                  color: Colors.pink[600]))),
-      Padding(
-          padding: EdgeInsets.only(top: 100.0),
-          child:
-              Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-            IconButton(
-                icon: Icon(Icons.stop_circle_outlined),
-                color: Colors.red,
-                iconSize: 80,
-                onPressed: updateId),
-            IconButton(icon: Icon(Icons.help), onPressed: () {}),
-            IconButton(
-                icon: Icon(Icons.check_box),
-                color: Colors.green,
-                iconSize: 80,
-                onPressed: updateId)
-          ]))
-    ]));
+    return StreamBuilder<Profile>(
+        stream: DatabaseService(uid: user.uid).profile,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            Profile profile = snapshot.data;
+            return Center(
+                child: Column(children: [
+              Padding(
+                  padding: EdgeInsets.only(top: 220.0),
+                  child: Text('${newName.name}',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 60,
+                          color: Colors.pink[600]))),
+              Padding(
+                  padding: EdgeInsets.only(top: 100.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      IconButton(
+                          icon: Icon(Icons.stop_circle_outlined),
+                          color: Colors.red,
+                          iconSize: 80,
+                          onPressed: updateId),
+                      IconButton(icon: Icon(Icons.help), onPressed: () {}),
+                      IconButton(
+                          icon: Icon(Icons.check_box),
+                          color: Colors.green,
+                          iconSize: 80,
+                          onPressed: () async {
+                            setState(() {
+                              profile.boys_names.add(newName.name);
+                              addNametoDatabase(
+                                  profile.uid, profile.boys_names);
+                            });
+                            updateId();
+                          })
+                    ],
+                  ))
+            ]));
+          } else {
+            return Loading();
+          }
+        });
   }
 }
