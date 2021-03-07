@@ -26,12 +26,12 @@ class _GirlNamesState extends State<GirlNames> {
 
   void addSomeNames() async {
     final database = DatabaseInstance.getInstance();
-    BabyName name1 = BabyName(id: '1', name: 'Rachael', gender: 'female');
-    BabyName name2 = BabyName(id: '2', name: 'Ann', gender: 'female');
-    BabyName name3 = BabyName(id: '3', name: 'Gina', gender: 'female');
-    BabyName name4 = BabyName(id: '4', name: 'Ashley', gender: 'female');
-    BabyName name5 = BabyName(id: '5', name: 'Jill', gender: 'female');
-    BabyName name6 = BabyName(id: '6', name: 'Emily', gender: 'female');
+    BabyName name1 = BabyName(id: 1, name: 'Rachael', gender: 'female');
+    BabyName name2 = BabyName(id: 2, name: 'Ann', gender: 'female');
+    BabyName name3 = BabyName(id: 3, name: 'Gina', gender: 'female');
+    BabyName name4 = BabyName(id: 4, name: 'Ashley', gender: 'female');
+    BabyName name5 = BabyName(id: 5, name: 'Jill', gender: 'female');
+    BabyName name6 = BabyName(id: 6, name: 'Emily', gender: 'female');
     database.saveGirlName(name: name1);
     database.saveGirlName(name: name2);
     database.saveGirlName(name: name3);

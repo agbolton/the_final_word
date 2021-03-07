@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:sqflite/sqflite.dart';
 import '../../services/sql_db.dart';
 import '../../models/baby_name.dart';
 import '../../services/database.dart';
@@ -7,6 +10,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 import '../../models/user.dart';
 import 'package:the_final_word/components/loading.dart';
+import 'package:flutter/services.dart';
+import '../../models/baby_db.dart';
+
+const DB_CREATE_PATH = 'assets/boy_names_2018.json';
 
 class BoyNames extends StatefulWidget {
   @override
@@ -15,15 +22,32 @@ class BoyNames extends StatefulWidget {
 
 class _BoyNamesState extends State<BoyNames> {
   int boyId;
+  Names names = Names();
 
   BabyName newName = BabyName();
 
   void initState() {
     super.initState();
-    addSomeNames();
+    addDBNames();
+    //addSomeNames();
     initId();
   }
 
+  void addDBNames() async {
+    String jsonString = await rootBundle.loadString(DB_CREATE_PATH);
+    final database = DatabaseInstance.getInstance();
+    names = Names.fromJSON(jsonDecode(jsonString));
+    database.testPrint();
+    int index = 1;
+
+    names.names.forEach((element) {
+      BabyName nameToAdd =
+          BabyName(id: index, name: element.toString(), gender: 'male');
+      database.saveBoyName(name: nameToAdd);
+      index++;
+    });
+  }
+  /*
   void addSomeNames() async {
     final database = DatabaseInstance.getInstance();
     BabyName name1 = BabyName(id: '1', name: 'Ron', gender: 'male');
@@ -39,6 +63,7 @@ class _BoyNamesState extends State<BoyNames> {
     database.saveBoyName(name: name5);
     database.saveBoyName(name: name6);
   }
+*/
 
   void initId() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -100,10 +125,11 @@ class _BoyNamesState extends State<BoyNames> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       IconButton(
-                          icon: Icon(Icons.stop_circle_outlined),
-                          color: Colors.red,
-                          iconSize: 80,
-                          onPressed: updateId),
+                        icon: Icon(Icons.stop_circle_outlined),
+                        color: Colors.red,
+                        iconSize: 80,
+                        onPressed: updateId,
+                      ),
                       IconButton(icon: Icon(Icons.help), onPressed: () {}),
                       IconButton(
                           icon: Icon(Icons.check_box),
