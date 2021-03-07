@@ -4,6 +4,7 @@ import 'my_content.dart';
 import 'our_content.dart';
 import 'boy_names.dart';
 import 'girl_names.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -15,6 +16,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  bool _view;
   int _currentIndex = 3;
   final List<Widget> _children = [
     OurContent(),
@@ -23,10 +25,30 @@ class _HomePageState extends State<HomePage> {
     MyContent(),
   ];
 
+  void initState() {
+    super.initState();
+    initView();
+  }
+
+  void initView() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _view = prefs.getBool('view') ?? true;
+    });
+  }
+
   void onTabTapped(int index) {
     setState(() {
       _currentIndex = index;
     });
+  }
+
+  void onChange(bool value) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _view = value;
+    });
+    prefs.setBool('view', value);
   }
 
   final AuthService _auth = AuthService();
@@ -45,6 +67,23 @@ class _HomePageState extends State<HomePage> {
               label: Text('Logout', style: TextStyle(color: Colors.black)),
             )
           ],
+        ),
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              DrawerHeader(
+                child: Text('Content Option'),
+                decoration: BoxDecoration(color: Colors.blue),
+              ),
+              SwitchListTile(
+                  title: Text('View Girls / Boys Names'),
+                  value: _view,
+                  onChanged: (bool value) {
+                    onChange(value);
+                  })
+            ],
+          ),
         ),
         body: _children[_currentIndex],
         bottomNavigationBar: BottomNavigationBar(
