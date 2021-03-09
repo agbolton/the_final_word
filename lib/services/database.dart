@@ -18,6 +18,7 @@ class DatabaseService {
       'access_code': '',
       'girls_names': [],
       'boys_names': [],
+      'movies': [],
       'connected_to': '',
     });
   }
@@ -33,6 +34,7 @@ class DatabaseService {
         girls_names:
             List.castFrom(snapshot.data()['girls_names'] as List ?? []),
         boys_names: List.castFrom(snapshot.data()['boys_names'] as List ?? []),
+        movies: List.castFrom(snapshot.data()['movies'] as List ?? []),
         connected_to: snapshot.data()['connected_to']);
   }
 

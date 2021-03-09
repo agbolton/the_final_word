@@ -55,6 +55,7 @@ flutter:
   assets:
      - assets/boy_names_2018.json
      - assets/girl_names_2018.json
+     - assets/movies.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

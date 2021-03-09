@@ -1,28 +1,22 @@
 import 'package:flutter/material.dart';
 import '../../services/sql_db.dart';
-import '../../models/baby_name.dart';
 import '../../services/database.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
-import '../../models/user.dart';
+import '../../models/movie.dart';
 import 'package:the_final_word/components/loading.dart';
-import '../../models/baby_db.dart';
-import 'dart:convert';
-import 'package:flutter/services.dart';
+import '../../models/user.dart';
 
-class GirlNames extends StatefulWidget {
+class AddMovies extends StatefulWidget {
   @override
-  _GirlNamesState createState() => _GirlNamesState();
+  _AddMovies createState() => _AddMovies();
 }
 
-class _GirlNamesState extends State<GirlNames> {
-  int girlId;
-  Names names = Names();
+class _AddMovies extends State<AddMovies> {
+  int movieID;
 
-  BabyName newName = BabyName();
-
-  static const MOVIE_PATH = 'assets/movies.json';
+  Movie newMovie = Movie();
 
   void initState() {
     super.initState();
@@ -30,40 +24,35 @@ class _GirlNamesState extends State<GirlNames> {
   }
 
   void initId() async {
-    String moviesJsonString = await rootBundle.loadString(MOVIE_PATH);
-    List<dynamic> movies = jsonDecode(moviesJsonString);
-    movies.forEach((element) {
-      print(element['title']);
-    });
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      girlId = prefs.getInt('girlId') ?? 1;
+      movieID = prefs.getInt('movieId') ?? 1;
     });
-    getName(girlId);
+    getName(movieID);
   }
 
   void updateId() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    girlId = girlId + 1;
-    prefs.setInt('girlId', girlId);
-    getName(girlId);
+    movieID = movieID + 1;
+    prefs.setInt('movieID', movieID);
+    getName(movieID);
   }
 
-  void getName(int girlId) async {
+  void getName(int movieId) async {
     final database = DatabaseInstance.getInstance();
-    BabyName pullName = await database.getNewGirlName(girlId);
+    Movie pullMovie = await database.getNewMovie(movieID);
     setState(() {
-      newName = pullName;
+      newMovie = pullMovie;
     });
   }
 
-  void addNametoDatabase(String uid, List<String> names) async {
+  void addNametoDatabase(String uid, List<String> movies) async {
     final CollectionReference userProfile =
         FirebaseFirestore.instance.collection('profiles');
 
     return userProfile
         .doc(uid)
-        .update({'girls_names': FieldValue.arrayUnion(names)}).catchError(
+        .update({'movies': FieldValue.arrayUnion(movies)}).catchError(
             (onError) => print('Failed to add'));
   }
 
@@ -71,7 +60,7 @@ class _GirlNamesState extends State<GirlNames> {
   Widget build(BuildContext context) {
     final user = Provider.of<NewUser>(context);
 
-    if (newName == null) {
+    if (newMovie == null) {
       return Center(child: CircularProgressIndicator());
     }
 
@@ -84,7 +73,7 @@ class _GirlNamesState extends State<GirlNames> {
                 child: Column(children: [
               Padding(
                   padding: EdgeInsets.only(top: 220.0),
-                  child: Text('${newName.name}',
+                  child: Text('${newMovie.name}',
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 60,
@@ -106,9 +95,8 @@ class _GirlNamesState extends State<GirlNames> {
                           iconSize: 80,
                           onPressed: () async {
                             setState(() {
-                              profile.girls_names.add(newName.name);
-                              addNametoDatabase(
-                                  profile.uid, profile.girls_names);
+                              profile.movies.add(newMovie.name);
+                              addNametoDatabase(profile.uid, profile.movies);
                             });
                             updateId();
                           })

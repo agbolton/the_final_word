@@ -4,7 +4,7 @@ import 'my_content.dart';
 import 'our_content.dart';
 import 'boy_names.dart';
 import 'girl_names.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'movies.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -16,12 +16,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  bool _view;
-  int _currentIndex = 3;
+  int _currentIndex = 4;
   final List<Widget> _children = [
     OurContent(),
     BoyNames(),
     GirlNames(),
+    AddMovies(),
     MyContent(),
   ];
 
@@ -33,14 +33,6 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       _currentIndex = index;
     });
-  }
-
-  void onChange(bool value) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _view = value;
-    });
-    prefs.setBool('view', value);
   }
 
   final AuthService _auth = AuthService();
@@ -79,6 +71,10 @@ class _HomePageState extends State<HomePage> {
             BottomNavigationBarItem(
               icon: Icon(Icons.person, color: Colors.pink),
               label: 'Girl Names',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.movie),
+              label: 'Movies',
             ),
             BottomNavigationBarItem(icon: Icon(Icons.home), label: 'My Content')
           ],
