@@ -28,42 +28,8 @@ class _BoyNamesState extends State<BoyNames> {
 
   void initState() {
     super.initState();
-    addDBNames();
-    //addSomeNames();
     initId();
   }
-
-  void addDBNames() async {
-    String jsonString = await rootBundle.loadString(DB_CREATE_PATH);
-    final database = DatabaseInstance.getInstance();
-    names = Names.fromJSON(jsonDecode(jsonString));
-    database.testPrint();
-    int index = 1;
-
-    names.names.forEach((element) {
-      BabyName nameToAdd =
-          BabyName(id: index, name: element.toString(), gender: 'male');
-      database.saveBoyName(name: nameToAdd);
-      index++;
-    });
-  }
-  /*
-  void addSomeNames() async {
-    final database = DatabaseInstance.getInstance();
-    BabyName name1 = BabyName(id: '1', name: 'Ron', gender: 'male');
-    BabyName name2 = BabyName(id: '2', name: 'Adam', gender: 'male');
-    BabyName name3 = BabyName(id: '3', name: 'George', gender: 'male');
-    BabyName name4 = BabyName(id: '4', name: 'Eric', gender: 'male');
-    BabyName name5 = BabyName(id: '5', name: 'Jack', gender: 'male');
-    BabyName name6 = BabyName(id: '6', name: 'Marcus', gender: 'male');
-    database.saveBoyName(name: name1);
-    database.saveBoyName(name: name2);
-    database.saveBoyName(name: name3);
-    database.saveBoyName(name: name4);
-    database.saveBoyName(name: name5);
-    database.saveBoyName(name: name6);
-  }
-*/
 
   void initId() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();

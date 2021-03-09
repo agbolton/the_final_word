@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import '../../services/sql_db.dart';
 import '../../models/baby_name.dart';
@@ -7,6 +8,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 import '../../models/user.dart';
 import 'package:the_final_word/components/loading.dart';
+import 'package:flutter/services.dart';
+import '../../models/baby_db.dart';
+
+const GIRL_PATH = 'assets/girl_names_2018.json';
 
 class GirlNames extends StatefulWidget {
   @override
@@ -15,29 +20,13 @@ class GirlNames extends StatefulWidget {
 
 class _GirlNamesState extends State<GirlNames> {
   int girlId;
+  Names names = Names();
 
   BabyName newName = BabyName();
 
   void initState() {
     super.initState();
-    addSomeNames();
     initId();
-  }
-
-  void addSomeNames() async {
-    final database = DatabaseInstance.getInstance();
-    BabyName name1 = BabyName(id: 1, name: 'Rachael', gender: 'female');
-    BabyName name2 = BabyName(id: 2, name: 'Ann', gender: 'female');
-    BabyName name3 = BabyName(id: 3, name: 'Gina', gender: 'female');
-    BabyName name4 = BabyName(id: 4, name: 'Ashley', gender: 'female');
-    BabyName name5 = BabyName(id: 5, name: 'Jill', gender: 'female');
-    BabyName name6 = BabyName(id: 6, name: 'Emily', gender: 'female');
-    database.saveGirlName(name: name1);
-    database.saveGirlName(name: name2);
-    database.saveGirlName(name: name3);
-    database.saveGirlName(name: name4);
-    database.saveGirlName(name: name5);
-    database.saveGirlName(name: name6);
   }
 
   void initId() async {
