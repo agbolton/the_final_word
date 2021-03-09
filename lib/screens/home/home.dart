@@ -27,14 +27,6 @@ class _HomePageState extends State<HomePage> {
 
   void initState() {
     super.initState();
-    initView();
-  }
-
-  void initView() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _view = prefs.getBool('view') ?? true;
-    });
   }
 
   void onTabTapped(int index) {
@@ -67,23 +59,6 @@ class _HomePageState extends State<HomePage> {
               label: Text('Logout', style: TextStyle(color: Colors.black)),
             )
           ],
-        ),
-        drawer: Drawer(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: <Widget>[
-              DrawerHeader(
-                child: Text('Content Option'),
-                decoration: BoxDecoration(color: Colors.blue),
-              ),
-              SwitchListTile(
-                  title: Text('View Boys / Girl Names'),
-                  value: _view,
-                  onChanged: (bool value) {
-                    onChange(value);
-                  })
-            ],
-          ),
         ),
         body: _children[_currentIndex],
         bottomNavigationBar: BottomNavigationBar(
