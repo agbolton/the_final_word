@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:the_final_word/components/loading.dart';
 import 'package:the_final_word/screens/home/Our_Content/boys.dart';
+import 'package:the_final_word/screens/home/Our_Content/movies.dart';
 import '../home/Our_Content/girls.dart';
 import '../../services/database.dart';
 import 'package:provider/provider.dart';
@@ -28,15 +29,16 @@ class _OurContentState extends State<OurContent> {
 
   static const tabs = [
     Tab(icon: Icon(Icons.account_box_outlined)),
-    Tab(icon: Icon(Icons.article_outlined))
+    Tab(icon: Icon(Icons.article_outlined)),
+    Tab(icon: Icon(Icons.movie))
   ];
 
-  final screens = [BoysOurContent(), GirlsOurContent()];
+  final screens = [BoysOurContent(), GirlsOurContent(), MoviesOurContent()];
 
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-        length: 2,
+        length: 3,
         child: Scaffold(
             appBar: AppBar(
               centerTitle: true,
