@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:the_final_word/components/loading.dart';
+import 'package:the_final_word/screens/home/My_Content/movies.dart';
 import '../../services/database.dart';
 import 'package:provider/provider.dart';
 import '../../models/user.dart';
@@ -17,10 +18,11 @@ class MyContent extends StatefulWidget {
 class _MyContentState extends State<MyContent> {
   static const tabs = [
     Tab(icon: Icon(Icons.account_box_outlined)),
-    Tab(icon: Icon(Icons.article_outlined))
+    Tab(icon: Icon(Icons.article_outlined)),
+    Tab(icon: Icon(Icons.movie))
   ];
 
-  final screens = [BoysMyContent(), GirlsMyContent()];
+  final screens = [BoysMyContent(), GirlsMyContent(), MoviesMyContent()];
 
   void initState() {
     super.initState();
@@ -29,7 +31,7 @@ class _MyContentState extends State<MyContent> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-        length: 2,
+        length: 3,
         child: Scaffold(
             appBar: AppBar(
               centerTitle: true,

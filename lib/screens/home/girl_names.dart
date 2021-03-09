@@ -22,19 +22,12 @@ class _GirlNamesState extends State<GirlNames> {
 
   BabyName newName = BabyName();
 
-  static const MOVIE_PATH = 'assets/movies.json';
-
   void initState() {
     super.initState();
     initId();
   }
 
   void initId() async {
-    String moviesJsonString = await rootBundle.loadString(MOVIE_PATH);
-    List<dynamic> movies = jsonDecode(moviesJsonString);
-    movies.forEach((element) {
-      print(element['title']);
-    });
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       girlId = prefs.getInt('girlId') ?? 1;
