@@ -14,7 +14,7 @@ class AddMovies extends StatefulWidget {
 }
 
 class _AddMovies extends State<AddMovies> {
-  int movieID;
+  int movieId;
 
   Movie newMovie = Movie();
 
@@ -26,21 +26,21 @@ class _AddMovies extends State<AddMovies> {
   void initId() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      movieID = prefs.getInt('movieId') ?? 1;
+      movieId = prefs.getInt('movieId') ?? 1;
     });
-    getName(movieID);
+    getName(movieId);
   }
 
   void updateId() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    movieID = movieID + 1;
-    prefs.setInt('movieID', movieID);
-    getName(movieID);
+    movieId = movieId + 1;
+    prefs.setInt('movieId', movieId);
+    getName(movieId);
   }
 
   void getName(int movieId) async {
     final database = DatabaseInstance.getInstance();
-    Movie pullMovie = await database.getNewMovie(movieID);
+    Movie pullMovie = await database.getNewMovie(movieId);
     setState(() {
       newMovie = pullMovie;
     });

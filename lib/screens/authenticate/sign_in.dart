@@ -26,18 +26,18 @@ class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
     return  loading ? Loading() : Scaffold(
-      backgroundColor: Colors.blue[100],
+      backgroundColor: Colors.indigo[100],
       appBar: AppBar(
-        backgroundColor: Colors.blue[400],
+        backgroundColor: Colors.indigo[400],
         elevation: 0.0,
         title: Text('Sign in to Final Word'),
         actions: <Widget>[
           TextButton.icon(
-            icon: Icon(Icons.person, color: Colors.black),
+            icon: Icon(Icons.person, color: Colors.white),
             onPressed: () async {
               widget.toggleView();
             },
-            label: Text('Register', style: TextStyle(color: Colors.black)),
+            label: Text('Register', style: TextStyle(color: Colors.white)),
           )
         ]
         ),
@@ -66,7 +66,7 @@ class _SignInState extends State<SignIn> {
                 ),
                 SizedBox(height: 20.0),
                 ElevatedButton(
-                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.blue[400])),
+                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.indigo[400])),
                   child: Text('Sign In',
                     style: TextStyle(color: Colors.white),
                   ),

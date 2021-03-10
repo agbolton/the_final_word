@@ -69,8 +69,12 @@ class _MoviesOurContentState extends State<MoviesOurContent> {
                     return Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        SizedBox(height: 5),
                         Text(
-                            'You are connected with ${friendProfile.first_name} ${friendProfile.last_name}'),
+                            'Your partner is: '),
+                            Text('${friendProfile.first_name} ${friendProfile.last_name}',
+                            style: TextStyle(fontWeight: FontWeight.bold)
+                            ),
                         Expanded(
                           child: ListView.builder(
                             itemCount: nameSets.length,
