@@ -96,10 +96,18 @@ class _MoviesOurContentState extends State<MoviesOurContent> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      Text('In order to begin comparing content, please enter your partner\'s code below.',
+                        style: TextStyle(fontSize: 20),
+                        textAlign: TextAlign.center),
+                      SizedBox(height: 20),
+                      Text('Your code can be generated in My Content by clicking the \'+\'',
+                      style: TextStyle(fontSize: 20),
+                      textAlign: TextAlign.center),
+                      SizedBox(height: 20),
                       TextFormField(
-                          autofocus: true,
+                          autofocus: false,
                           decoration: InputDecoration(
-                            labelText: 'Title',
+                            labelText: 'Enter Your Partner\'s code here',
                             border: OutlineInputBorder(),
                           ),
                           onSaved: (value) {

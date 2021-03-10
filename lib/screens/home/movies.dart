@@ -74,10 +74,11 @@ class _AddMovies extends State<AddMovies> {
               Padding(
                   padding: EdgeInsets.only(top: 220.0),
                   child: Text('${newMovie.name}',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 60,
-                          color: Colors.pink[600]))),
+                          fontSize: 50,
+                          color: Colors.indigo))),
               Padding(
                   padding: EdgeInsets.only(top: 100.0),
                   child: Row(

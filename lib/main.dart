@@ -28,7 +28,7 @@ class _AppState extends State<App> {
           debugShowCheckedModeBanner: false,
           title: 'Final Word',
           theme: ThemeData(
-            primarySwatch: Colors.blue,
+            primarySwatch: Colors.indigo,
             visualDensity: VisualDensity.adaptivePlatformDensity,
           ),
           home: Wrapper()),

@@ -84,7 +84,7 @@ class _BoyNamesState extends State<BoyNames> {
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 60,
-                          color: Colors.pink[600]))),
+                          color: Colors.blue[900]))),
               Padding(
                   padding: EdgeInsets.only(top: 100.0),
                   child: Row(

@@ -41,12 +41,12 @@ class ProfileTile extends StatelessWidget {
       child: Card(
           margin: EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
           child: ListTile(
-              leading: CircleAvatar(
-                radius: 25.0,
-                backgroundColor: Colors.blue,
-              ),
+              // leading: CircleAvatar(
+              //   radius: 25.0,
+              //   backgroundColor: Colors.blue,
+              // ),
               title: Text('${profile.first_name} ${profile.last_name}'),
-              subtitle: Text('Code to Share: ${profile.access_code}'),
+              subtitle: Text('Code to Link (click + to generate): ${profile.access_code}'),
               trailing: FloatingActionButton(
                 onPressed: () async {
                   await generateCodetoDB();
