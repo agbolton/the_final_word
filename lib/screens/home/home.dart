@@ -44,11 +44,11 @@ class _HomePageState extends State<HomePage> {
           title: Text(widget.title),
           actions: <Widget>[
             TextButton.icon(
-              icon: Icon(Icons.person, color: Colors.black),
+              icon: Icon(Icons.person, color: Colors.white),
               onPressed: () async {
                 await _auth.signOut();
               },
-              label: Text('Logout', style: TextStyle(color: Colors.black)),
+              label: Text('Logout', style: TextStyle(color: Colors.white)),
             )
           ],
         ),

@@ -14,7 +14,7 @@ class AddMovies extends StatefulWidget {
 }
 
 class _AddMovies extends State<AddMovies> {
-  int movieID;
+  int movieId;
 
   Movie newMovie = Movie();
 
@@ -26,21 +26,21 @@ class _AddMovies extends State<AddMovies> {
   void initId() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      movieID = prefs.getInt('movieId') ?? 1;
+      movieId = prefs.getInt('movieId') ?? 1;
     });
-    getName(movieID);
+    getName(movieId);
   }
 
   void updateId() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    movieID = movieID + 1;
-    prefs.setInt('movieID', movieID);
-    getName(movieID);
+    movieId = movieId + 1;
+    prefs.setInt('movieId', movieId);
+    getName(movieId);
   }
 
   void getName(int movieId) async {
     final database = DatabaseInstance.getInstance();
-    Movie pullMovie = await database.getNewMovie(movieID);
+    Movie pullMovie = await database.getNewMovie(movieId);
     setState(() {
       newMovie = pullMovie;
     });
@@ -72,27 +72,46 @@ class _AddMovies extends State<AddMovies> {
             return Center(
                 child: Column(children: [
               Padding(
-                  padding: EdgeInsets.only(top: 220.0),
+                  padding: EdgeInsets.only(top: 175),
                   child: Text('${newMovie.name}',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 60,
-                          color: Colors.pink[600]))),
+                          fontSize: 40,
+                          color: Colors.indigo))),
               Padding(
-                  padding: EdgeInsets.only(top: 100.0),
+                  padding: EdgeInsets.only(top: 75),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      IconButton(
-                          icon: Icon(Icons.stop_circle_outlined),
-                          color: Colors.red,
-                          iconSize: 80,
-                          onPressed: updateId),
-                      IconButton(icon: Icon(Icons.help), onPressed: () {}),
-                      IconButton(
-                          icon: Icon(Icons.check_box),
-                          color: Colors.green,
-                          iconSize: 80,
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Container(
+                          margin: EdgeInsets.all(20),
+                          padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                            border: Border.all(width: 5, color: Colors.red)),
+                          child: IconButton(
+                            icon: Icon(Icons.close),
+                            color: Colors.red,
+                            iconSize: 80,
+                            onPressed: updateId,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 10),
+                        child: Container(
+                          margin: EdgeInsets.all(20),
+                          padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                            border: Border.all(width: 5, color: Colors.green)),
+                          child: IconButton(
+                              icon: Icon(Icons.check),
+                              color: Colors.green,
+                              iconSize: 80,
                           onPressed: () async {
                             setState(() {
                               profile.movies.add(newMovie.name);
@@ -100,7 +119,7 @@ class _AddMovies extends State<AddMovies> {
                             });
                             updateId();
                           })
-                    ],
+                        ))],
                   ))
             ]));
           } else {

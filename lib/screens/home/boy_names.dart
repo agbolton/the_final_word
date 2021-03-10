@@ -79,36 +79,55 @@ class _BoyNamesState extends State<BoyNames> {
             return Center(
                 child: Column(children: [
               Padding(
-                  padding: EdgeInsets.only(top: 220.0),
+                  padding: EdgeInsets.only(top: 175.0),
                   child: Text('${newName.name}',
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 60,
-                          color: Colors.pink[600]))),
+                          fontSize: 75,
+                          color: Colors.blue[900]))),
               Padding(
-                  padding: EdgeInsets.only(top: 100.0),
+                  padding: EdgeInsets.only(top: 75),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      IconButton(
-                        icon: Icon(Icons.stop_circle_outlined),
-                        color: Colors.red,
-                        iconSize: 80,
-                        onPressed: updateId,
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Container(
+                          margin: EdgeInsets.all(20),
+                          padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                            border: Border.all(width: 5, color: Colors.red)),
+                          child: IconButton(
+                            icon: Icon(Icons.close),
+                            color: Colors.red,
+                            iconSize: 80,
+                            onPressed: updateId,
+                          ),
+                        ),
                       ),
-                      IconButton(icon: Icon(Icons.help), onPressed: () {}),
-                      IconButton(
-                          icon: Icon(Icons.check_box),
-                          color: Colors.green,
-                          iconSize: 80,
-                          onPressed: () async {
-                            setState(() {
-                              profile.boys_names.add(newName.name);
-                              addNametoDatabase(
-                                  profile.uid, profile.boys_names);
-                            });
-                            updateId();
-                          })
+                      Padding(
+                        padding: const EdgeInsets.only(right: 10),
+                        child: Container(
+                          margin: EdgeInsets.all(20),
+                          padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                            border: Border.all(width: 5, color: Colors.green)),
+                          child: IconButton(
+                              icon: Icon(Icons.check),
+                              color: Colors.green,
+                              iconSize: 80,
+                              onPressed: () async {
+                                setState(() {
+                                  profile.boys_names.add(newName.name);
+                                  addNametoDatabase(
+                                      profile.uid, profile.boys_names);
+                                });
+                                updateId();
+                              }),
+                        ),
+                      )
                     ],
                   ))
             ]));

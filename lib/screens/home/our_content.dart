@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:the_final_word/components/loading.dart';
 import 'package:the_final_word/screens/home/Our_Content/boys.dart';
 import 'package:the_final_word/screens/home/Our_Content/movies.dart';
 import '../home/Our_Content/girls.dart';
-import '../../services/database.dart';
-import 'package:provider/provider.dart';
 import '../../models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class OurContent extends StatefulWidget {
   const OurContent({Key key}) : super(key: key);
@@ -28,9 +24,9 @@ class _OurContentState extends State<OurContent> {
   }
 
   static const tabs = [
-    Tab(icon: Icon(Icons.account_box_outlined)),
-    Tab(icon: Icon(Icons.article_outlined)),
-    Tab(icon: Icon(Icons.movie))
+    Tab(icon: Icon(Icons.person, color: Colors.white), text: 'Boy Names', iconMargin: EdgeInsets.all(1)),
+    Tab(icon: Icon(Icons.person, color: Colors.white), text: 'Girl Names', iconMargin: EdgeInsets.all(1)),
+    Tab(icon: Icon(Icons.movie), text: 'Movies', iconMargin: EdgeInsets.all(1))
   ];
 
   final screens = [BoysOurContent(), GirlsOurContent(), MoviesOurContent()];
@@ -42,7 +38,7 @@ class _OurContentState extends State<OurContent> {
         child: Scaffold(
             appBar: AppBar(
               centerTitle: true,
-              flexibleSpace: TabBar(tabs: tabs),
+              flexibleSpace: Container(child: TabBar(tabs: tabs), color: Colors.indigo[300]),
             ),
             body: TabBarView(
               children: screens,

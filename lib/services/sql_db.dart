@@ -65,7 +65,6 @@ class DatabaseInstance {
       String moviesJsonString = await rootBundle.loadString(MOVIE_PATH);
       List<dynamic> movies = jsonDecode(moviesJsonString);
       movies.forEach((element) {
-        print(element['title']);
         Movie movieToAdd =
             Movie(id: movieIndex, name: element['title'].toString());
         saveMovie(db, movie: movieToAdd);

@@ -69,8 +69,12 @@ class _GirlsOurContentState extends State<GirlsOurContent> {
                     return Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                       SizedBox(height: 5),
                         Text(
-                            'You are connected with ${friendProfile.first_name} ${friendProfile.last_name}'),
+                            'Your partner is: '),
+                            Text('${friendProfile.first_name} ${friendProfile.last_name}',
+                            style: TextStyle(fontWeight: FontWeight.bold)
+                            ),
                         Expanded(
                           child: ListView.builder(
                             itemCount: nameSets.length,
@@ -96,10 +100,18 @@ class _GirlsOurContentState extends State<GirlsOurContent> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      Text('In order to begin comparing content, please enter your partner\'s code below.',
+                        style: TextStyle(fontSize: 20),
+                        textAlign: TextAlign.center),
+                      SizedBox(height: 20),
+                      Text('Your code can be generated in My Content by clicking the \'+\'',
+                      style: TextStyle(fontSize: 20),
+                      textAlign: TextAlign.center),
+                      SizedBox(height: 20),
                       TextFormField(
-                          autofocus: true,
+                          autofocus: false,
                           decoration: InputDecoration(
-                            labelText: 'Title',
+                            labelText: 'Enter Your Partner\'s code here',
                             border: OutlineInputBorder(),
                           ),
                           onSaved: (value) {
